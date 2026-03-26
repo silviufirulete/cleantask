@@ -1,0 +1,20 @@
+# 1. Permisiuni EXPLICITE de acces (pentru a debloca erori 403/404)
+# Compatibilitate cu Apache 2.4 (versiunea moderna)
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+
+# Compatibilitate cu Apache 2.2 (servere mai vechi)
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+</IfModule>
+
+# 2. Oprim motorul de rescriere URL
+# Asta forțează serverul să servească fișierele direct, fără să caute rute PHP
+<IfModule mod_rewrite.c>
+    RewriteEngine Off
+</IfModule>
+
+# 3. Prevenim listarea fișierelor (cine intră pe /assets/css nu vede lista, doar fișierele directe)
+Options -Indexes

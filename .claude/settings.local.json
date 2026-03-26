@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o \"/c/Users/silvi/Downloads/cleantask.silviufirulete.de.zip\" -d .)",
+      "Bash(php --version)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where php:*)",
+      "Read(//c/xampp/php/**)",
+      "Bash(ls /c/wamp*/bin/php/*/php.exe)",
+      "Bash(command -v php)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}
