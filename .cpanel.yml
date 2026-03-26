@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/$USER/public_html
+    - /bin/cp -r app $DEPLOYPATH/
+    - /bin/cp -r assets $DEPLOYPATH/
+    - /bin/cp -r js $DEPLOYPATH/
+    - /bin/cp index.php $DEPLOYPATH/
+    - /bin/cp .htaccess $DEPLOYPATH/
+    - /bin/cp firebase-messaging-sw.js $DEPLOYPATH/
+    - /bin/cp manifest.json $DEPLOYPATH/
