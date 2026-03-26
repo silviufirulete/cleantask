@@ -1,11 +1,5 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
-<!-- PWA Manifest & Meta Tags -->
-<link rel="manifest" href="/manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Tasks">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#1a237e">
 
 <style>
@@ -214,7 +208,9 @@
     let messaging = null;
     try { messaging = getMessaging(app); } catch (e) { console.log("FCM not available."); }
 
-    let targetUrl = '/dashboard';
+    // Detect base path to support both real domain and temp URLs (e.g. /~cleantas/)
+    const basePath = window.location.pathname.replace(/\/(login|index\.php)?$/, '').replace(/\/+$/, '');
+    let targetUrl = basePath + '/dashboard';
     let currentUserUid = null;
 
     async function requestAndSaveFCMToken(uid) {
@@ -244,16 +240,16 @@
                 const snap = await getDoc(doc(db, "users", user.uid));
                 if (snap.exists()) {
                     const data = snap.data();
-                    if (user.email === 'silviu.firulete@gmail.com') data.role = 'super_admin';
+                    if (user.email === window.superAdminEmail) data.role = 'super_admin';
 
                     document.getElementById('welcome-name').innerText = data.name || "User";
                     if(data.photoUrl) document.getElementById('welcome-avatar').src = data.photoUrl;
                     
                     if (data.role === 'admin' || data.role === 'super_admin') {
-                        targetUrl = '/admin'; 
+                        targetUrl = basePath + '/admin';
                         document.getElementById('btn-continue').innerHTML = '🚀 Go to <b>Admin Panel</b>';
                     } else {
-                        targetUrl = '/dashboard';
+                        targetUrl = basePath + '/dashboard';
                     }
                 }
             } catch (e) { console.error(e); }

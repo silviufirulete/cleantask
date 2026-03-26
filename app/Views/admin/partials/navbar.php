@@ -5,7 +5,7 @@
         <div class="d-flex align-items-center" style="min-width: 250px;">
             
             <!-- Imaginea Logo CleanTask -->
-            <img src="/cleantask.png" alt="CleanTask Logo" class="me-3 rounded shadow-sm" style="width: 48px; height: 48px; object-fit: contain; background-color: #ffffff;">
+            <img src="<?= BASE_PATH ?>/cleantask.png" alt="CleanTask Logo" class="me-3 rounded shadow-sm" style="width: 48px; height: 48px; object-fit: contain; background-color: #ffffff;">
             
             <!-- Textul Logo -->
             <div class="lh-1">

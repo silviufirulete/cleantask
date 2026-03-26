@@ -1,5 +1,5 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-<script src='/js/translations.js'></script>
+<script src='<?= BASE_PATH ?>/js/translations.js'></script>
 
 <script>
 // iOS Install Banner
@@ -217,7 +217,7 @@ onAuthStateChanged(auth, async (user) => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
             const userData = userDoc.data();
-            if (user.email === 'silviu.firulete@gmail.com') userData.role = 'super_admin';
+            if (user.email === window.superAdminEmail) userData.role = 'super_admin';
             if (userData.role === 'admin' || userData.role === 'super_admin') {
                 window.location.href = '/admin'; return; 
             }

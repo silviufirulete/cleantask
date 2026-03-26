@@ -6,34 +6,29 @@
     <title><?php echo $pageTitle ?? 'Clean Task Manager'; ?></title>
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="<?= BASE_PATH ?>/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Tasks">
-    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
-    
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#ffffff">
-    
+
     <!-- ICONS -->
-    <!-- 1. Standard Favicon (Legacy & Desktop Tabs) -->
-    <link rel="shortcut icon" href="/favicon.ico?v=<?php echo time(); ?>">
-    
-    <!-- 2. Apple Touch Icon (CRITIC pentru iPhone/iPad - Home Screen) -->
-    <link rel="apple-touch-icon" href="https://cleantask.silviufirulete.de/assets/img/icon-192.png?v=<?php echo time(); ?>">
-    
-    <!-- 3. Android/Chrome High-Res Icons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="https://cleantask.silviufirulete.de/assets/img/icon-192.png?v=<?php echo time(); ?>">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://cleantask.silviufirulete.de/assets/img/icon-512.png?v=<?php echo time(); ?>">
+    <link rel="shortcut icon" href="<?= BASE_PATH ?>/favicon.ico?v=<?php echo time(); ?>">
+    <link rel="apple-touch-icon" href="<?= BASE_PATH ?>/apple-touch-icon.png?v=<?php echo time(); ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= BASE_PATH ?>/web-app-manifest-192x192.png?v=<?php echo time(); ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= BASE_PATH ?>/web-app-manifest-512x512.png?v=<?php echo time(); ?>">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/style.css?v=<?php echo time(); ?>">
 
     <!-- Inject Firebase Config -->
     <script>
+        window.superAdminEmail = "<?php echo getenv('SUPER_ADMIN_EMAIL'); ?>";
         window.firebaseConfig = {
             apiKey: "<?php echo getenv('FIREBASE_API_KEY'); ?>",
             authDomain: "<?php echo getenv('FIREBASE_AUTH_DOMAIN'); ?>",
@@ -47,7 +42,7 @@
     <script>
     if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    navigator.serviceWorker.register('<?= BASE_PATH ?>/firebase-messaging-sw.js')
       .then(function(registration) {
         console.log('ServiceWorker PWA activat cu scope: ', registration.scope);
       }).catch(function(err) {

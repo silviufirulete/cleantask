@@ -1,11 +1,6 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
-<!-- 1. STILURI CSS & MANIFEST PWA -->
-<link rel="manifest" href="/manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="CleanTask Admin">
-<link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+<!-- 1. STILURI CSS -->
 <?php include __DIR__ . '/partials/styles.php'; ?>
 
 <!-- 2. BARA DE NAVIGARE (NAVBAR) -->

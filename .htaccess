@@ -1,9 +1,9 @@
 Options +FollowSymLinks -MultiViews
 RewriteEngine On
 
-# === 0. FORCE HTTPS (IMPORTANT) ===
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# === 0. FORCE HTTPS (re-enable after domain propagation) ===
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 <IfModule mod_headers.c>
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
