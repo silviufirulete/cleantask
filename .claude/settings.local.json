@@ -14,7 +14,10 @@
       "Bash(git config:*)",
       "Bash(git remote:*)",
       "Bash(git branch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(sed -i 's/download_pdf: \"\"Descarcă PDF\"\",/download_pdf: \"\"Descarcă PDF\"\", load_more: \"\"Încarcă mai mult\"\",/' /c/CleanTask/js/translations.js)",
+      "Bash(sed -i 's/download_pdf: \"\"Shkarko PDF\"\",/download_pdf: \"\"Shkarko PDF\"\", load_more: \"\"Ngarko më shumë\"\",/' /c/CleanTask/js/translations.js)",
+      "Bash(sed -i 's/download_pdf: \"\"Pobierz PDF\"\",/download_pdf: \"\"Pobierz PDF\"\", load_more: \"\"Załaduj więcej\"\",/' /c/CleanTask/js/translations.js)"
     ]
   }
 }

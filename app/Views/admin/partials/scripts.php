@@ -14,7 +14,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut, updateProfile, createUserWithEmailAndPassword, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, collection, getDocs, onSnapshot, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, collection, getDocs, onSnapshot, query, where, orderBy, limit, startAfter } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
     import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
 
@@ -912,20 +912,74 @@
         } catch(e){} 
     }
 
-    window.openArchiveModal = async function() { 
-        if(archiveModal) archiveModal.show(); 
-        const b = document.getElementById('archive-table-body'); 
-        if(b) b.innerHTML = '<tr><td>Loading...</td></tr>'; 
-        const s = await getDocs(query(collection(db, "tasks_archive"), orderBy("deadline", "desc"), limit(20))); 
-        if(b) b.innerHTML = ''; 
-        s.forEach(d => { 
-            const t = d.data(); 
-            if(b) b.innerHTML += `<tr><td>${t.title}</td><td>${t.deadline}</td><td>${t.claimedByName||'-'}</td><td><button class="btn btn-sm btn-danger" onclick="delArch('${d.id}')">X</button></td></tr>`; 
-        }); 
+    let _archiveLastDoc = null;
+    let _archiveAllLoaded = false;
+    const ARCHIVE_PAGE = 20;
+
+    function _renderArchiveRow(d) {
+        const t = d.data();
+        const lang = localStorage.getItem('appLang') || 'en';
+        const dict = (typeof translations !== 'undefined' && translations[lang]) ? translations[lang] : {};
+        const deadlineStr = t.deadline ? new Date(t.deadline).toLocaleDateString([], {day:'2-digit',month:'2-digit',year:'numeric'}) : '-';
+        const completedStr = t.completedAt ? new Date(t.completedAt).toLocaleDateString([], {day:'2-digit',month:'2-digit',year:'numeric'}) : '-';
+        return `<tr>
+            <td class="small fw-bold">${t.title || '-'}</td>
+            <td class="small text-muted">${deadlineStr}</td>
+            <td class="small text-muted">${completedStr}</td>
+            <td class="small">${t.claimedByName || '-'}</td>
+            <td class="text-end"><button class="btn btn-sm btn-outline-danger py-0" onclick="delArch('${d.id}')" title="Delete">🗑️</button></td>
+        </tr>`;
     }
 
-    window.delArch = async(id) => { 
-        if(confirm("Delete from archive?")) { await deleteDoc(doc(db,"tasks_archive",id)); window.openArchiveModal(); } 
+    window.openArchiveModal = async function() {
+        _archiveLastDoc = null;
+        _archiveAllLoaded = false;
+        if(archiveModal) archiveModal.show();
+        const b = document.getElementById('archive-table-body');
+        const loadMoreBtn = document.getElementById('archive-load-more');
+        if(b) b.innerHTML = '<tr><td colspan="5" class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></td></tr>';
+        if(loadMoreBtn) loadMoreBtn.classList.add('d-none');
+
+        try {
+            const s = await getDocs(query(collection(db, "tasks_archive"), orderBy("deadline", "desc"), limit(ARCHIVE_PAGE)));
+            if(b) b.innerHTML = '';
+            if(s.empty) {
+                b.innerHTML = '<tr><td colspan="5" class="text-center text-muted small py-3">No archived tasks.</td></tr>';
+                return;
+            }
+            s.forEach(d => { if(b) b.innerHTML += _renderArchiveRow(d); });
+            _archiveLastDoc = s.docs[s.docs.length - 1];
+            _archiveAllLoaded = s.docs.length < ARCHIVE_PAGE;
+            if(loadMoreBtn) loadMoreBtn.classList.toggle('d-none', _archiveAllLoaded);
+        } catch(e) { console.error(e); }
+    }
+
+    window.loadMoreArchive = async function() {
+        if(_archiveAllLoaded || !_archiveLastDoc) return;
+        const b = document.getElementById('archive-table-body');
+        const loadMoreBtn = document.getElementById('archive-load-more');
+        if(loadMoreBtn) { loadMoreBtn.disabled = true; loadMoreBtn.innerText = '...'; }
+
+        try {
+            const s = await getDocs(query(collection(db, "tasks_archive"), orderBy("deadline", "desc"), limit(ARCHIVE_PAGE), startAfter(_archiveLastDoc)));
+            s.forEach(d => { if(b) b.innerHTML += _renderArchiveRow(d); });
+            _archiveLastDoc = s.docs[s.docs.length - 1];
+            _archiveAllLoaded = s.docs.length < ARCHIVE_PAGE;
+            if(loadMoreBtn) {
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.innerText = 'Load more';
+                loadMoreBtn.classList.toggle('d-none', _archiveAllLoaded);
+            }
+        } catch(e) { console.error(e); }
+    }
+
+    window.delArch = async(id) => {
+        const lang = localStorage.getItem('appLang') || 'en';
+        const dict = (typeof translations !== 'undefined' && translations[lang]) ? translations[lang] : {};
+        if(confirm(dict['confirm_archive'] || "Delete from archive?")) {
+            await deleteDoc(doc(db,"tasks_archive",id));
+            window.openArchiveModal();
+        }
     }
     
     window.archiveSingleTask = async function(id) {

@@ -125,7 +125,35 @@
 <div class="modal fade" id="viewImagesModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content bg-transparent border-0"><div class="modal-body text-center" id="images-container"></div></div></div></div>
 
 <!-- Archive Modal -->
-<div class="modal fade" id="archiveModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header bg-secondary text-white"><h5 class="modal-title">🗄️ <span data-i18n="archive">Archive</span></h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><table class="table table-hover table-sm small"><thead><tr><th data-i18n="task">Task</th><th data-i18n="date">Date</th><th data-i18n="by">By</th><th>Actions</th></tr></thead><tbody id="archive-table-body"></tbody></table></div></div></div></div>
+<div class="modal fade" id="archiveModal" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header bg-secondary text-white">
+    <h5 class="modal-title">🗄️ <span data-i18n="archive">Archive</span></h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-0">
+    <div class="table-responsive">
+        <table class="table table-hover table-sm small mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th data-i18n="task">Task</th>
+                    <th data-i18n="deadline">Deadline</th>
+                    <th data-i18n="date">Completed</th>
+                    <th data-i18n="by">By</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="archive-table-body"></tbody>
+        </table>
+    </div>
+    <div class="text-center py-2">
+        <button id="archive-load-more" class="btn btn-sm btn-outline-secondary d-none" onclick="loadMoreArchive()" data-i18n="load_more">Load more</button>
+    </div>
+</div>
+</div>
+</div>
+</div>
 
 <!-- Profile Image Popout Modal -->
 <div class="modal fade" id="profileImageModal" tabindex="-1">

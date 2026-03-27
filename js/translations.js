@@ -38,7 +38,7 @@ const translations = {
         report_final_title: "Completion Report", completed_by: "Completed by",
         comment: "Comment", no_comment: "No comment provided.", loading: "Loading...",
         logs_title: "Task Logs & Notes", no_logs: "No history logs found.",
-        unknown_user: "Unknown User", system: "System", download_pdf: "Download PDF",
+        unknown_user: "Unknown User", system: "System", download_pdf: "Download PDF", load_more: "Load more",
 
         // User Specific
         worker_db: "Worker Dashboard", tab_tasks: "My Tasks", tab_done: "History", 
@@ -105,7 +105,7 @@ const translations = {
         report_final_title: "Raport Finalizare", completed_by: "Finalizat de",
         comment: "Comentariu", no_comment: "Fără comentariu.", loading: "Se încarcă...",
         logs_title: "Jurnal & Notițe", no_logs: "Nu există istoric.",
-        unknown_user: "Utilizator Necunoscut", system: "Sistem", download_pdf: "Descarcă PDF",
+        unknown_user: "Utilizator Necunoscut", system: "Sistem", download_pdf: "Descarcă PDF", load_more: "Încarcă mai mult",
 
         // User Specific
         worker_db: "Panou Muncitor", tab_tasks: "Sarcini", tab_done: "Istoric", 
@@ -173,7 +173,7 @@ const translations = {
         report_final_title: "Abschlussbericht", completed_by: "Abgeschlossen von",
         comment: "Kommentar", no_comment: "Kein Kommentar.", loading: "Laden...",
         logs_title: "Protokolle & Notizen", no_logs: "Keine Protokolle gefunden.",
-        unknown_user: "Unbekannter Benutzer", system: "System", download_pdf: "PDF herunterladen",
+        unknown_user: "Unbekannter Benutzer", system: "System", download_pdf: "PDF herunterladen", load_more: "Mehr laden",
 
         // User Specific
         worker_db: "Mitarbeiter", tab_tasks: "Aufgaben", tab_done: "Verlauf", 
@@ -237,7 +237,7 @@ const translations = {
         // Report & Logs
         report_final_title: "Rapporto Finale", completed_by: "Completato da", comment: "Commento",
         no_comment: "Nessun commento.", loading: "Caricamento...", logs_title: "Registri e Note",
-        no_logs: "Nessun registro trovato.", unknown_user: "Utente Sconosciuto", system: "Sistema", download_pdf: "Scarica PDF",
+        no_logs: "Nessun registro trovato.", unknown_user: "Utente Sconosciuto", system: "Sistema", download_pdf: "Scarica PDF", load_more: "Carica altro",
 
         // User Specific
         worker_db: "Pannello Lavoratore", tab_tasks: "I miei Compiti", tab_done: "Cronologia", 
@@ -296,7 +296,7 @@ const translations = {
         // Report & Logs
         report_final_title: "Raporti i Përfundimit", completed_by: "Përfunduar nga", comment: "Komenti",
         no_comment: "S'ka koment.", loading: "Duke ngarkuar...", logs_title: "Regjistrat e Detyrës",
-        no_logs: "Nuk u gjetën regjistra.", unknown_user: "Përdorues i Panjohur", system: "Sistemi", download_pdf: "Shkarko PDF",
+        no_logs: "Nuk u gjetën regjistra.", unknown_user: "Përdorues i Panjohur", system: "Sistemi", download_pdf: "Shkarko PDF", load_more: "Ngarko më shumë",
 
         // User Specific
         worker_db: "Paneli i Punëtorit", tab_tasks: "Detyrat e Mia", tab_done: "Historia", tab_calendar: "Kalendari", 
@@ -355,7 +355,7 @@ const translations = {
         // Report & Logs
         report_final_title: "Raport Końcowy", completed_by: "Ukończone przez", comment: "Komentarz",
         no_comment: "Brak komentarza.", loading: "Ładowanie...", logs_title: "Dzienniki i Notatki",
-        no_logs: "Brak historii.", unknown_user: "Nieznany Użytkownik", system: "System", download_pdf: "Pobierz PDF",
+        no_logs: "Brak historii.", unknown_user: "Nieznany Użytkownik", system: "System", download_pdf: "Pobierz PDF", load_more: "Załaduj więcej",
 
         // User Specific
         worker_db: "Panel Pracownika", tab_tasks: "Moje Zadania", tab_done: "Historia", tab_calendar: "Kalendarz", 
