@@ -22,7 +22,7 @@
             <div class="p-3 bg-white border-top position-relative" style="flex: 0 0 auto;">
                 
                 <!-- MENTIONS DROPDOWN (Ascuns implicit) -->
-                <div id="mentions-dropdown" class="list-group position-absolute w-100 shadow-sm d-none" style="bottom: 100%; left: 0; max-height: 200px; overflow-y: auto; z-index: 1050; margin-bottom: 5px; border-radius: 0.5rem;">
+                <div id="mentions-dropdown" class="list-group shadow d-none" style="position: fixed; max-height: 200px; overflow-y: auto; z-index: 9999; border-radius: 0.5rem; min-width: 200px;">
                     <!-- Elementele vor fi generate dinamic prin JS -->
                 </div>
 

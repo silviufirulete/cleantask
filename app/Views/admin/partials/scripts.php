@@ -1169,6 +1169,24 @@
         chatInput.addEventListener('blur', () => { setTimeout(hideMentionsDropdown, 200); });
     }
 
+    function positionMentionsDropdown() {
+        if(!mentionsDropdown || !chatInput) return;
+        const rect = chatInput.getBoundingClientRect();
+        mentionsDropdown.style.left = rect.left + 'px';
+        mentionsDropdown.style.width = rect.width + 'px';
+        // Place above the input; after render adjust if goes off-screen top
+        mentionsDropdown.style.bottom = (window.innerHeight - rect.top + 6) + 'px';
+        mentionsDropdown.style.top = 'auto';
+        // If dropdown would go off-screen at top, flip below input
+        requestAnimationFrame(() => {
+            const dRect = mentionsDropdown.getBoundingClientRect();
+            if(dRect.top < 8) {
+                mentionsDropdown.style.top = (rect.bottom + 6) + 'px';
+                mentionsDropdown.style.bottom = 'auto';
+            }
+        });
+    }
+
     function renderMentionsDropdown(users) {
         if(!mentionsDropdown) return;
         mentionsDropdown.innerHTML = '';
@@ -1181,6 +1199,7 @@
             item.onclick = function() { insertMention(user.name); };
             mentionsDropdown.appendChild(item);
         });
+        positionMentionsDropdown();
     }
 
     function insertMention(userName) {
