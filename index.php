@@ -8,7 +8,8 @@ error_reporting(E_ALL);
 session_start();
 
 // Base path (supports subdirectory installs e.g. /~cleantas/)
-define('BASE_PATH', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
+// str_replace fixes Windows dirname() returning backslashes
+define('BASE_PATH', rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/'));
 
 // Cai fisiere
 $envConfigPath = __DIR__ . '/app/Config/Env.php';
