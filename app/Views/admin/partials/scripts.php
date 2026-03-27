@@ -339,7 +339,10 @@
 
         let reqs = '-';
         if(t.requirements && t.requirements.length > 0) {
-            reqs = t.requirements.map(r => dict[`req_${r}`] || r).join(', ');
+            reqs = t.requirements.map(r => {
+                if(r === 'other') return (dict['req_other'] || 'Sonstige') + (t.requirementOtherText ? ': ' + t.requirementOtherText : '');
+                return dict[`req_${r}`] || r;
+            }).join(', ');
         }
         if(document.getElementById('view-task-reqs')) document.getElementById('view-task-reqs').innerText = reqs;
 
@@ -381,7 +384,19 @@
     window.closeCalPopup = function() { 
         if(document.getElementById('calendar-popout')) document.getElementById('calendar-popout').style.display = 'none'; 
     }
-    window.toggleDescRequired = function() { }
+    window.toggleDescRequired = function() {
+        const cb = document.getElementById('req-sonstige');
+        const container = document.getElementById('req-other-container');
+        const input = document.getElementById('req-other-desc');
+        if(!cb || !container) return;
+        if(cb.checked) {
+            container.classList.remove('d-none');
+            if(input) input.focus();
+        } else {
+            container.classList.add('d-none');
+            if(input) input.value = '';
+        }
+    }
 
     function populateHourSelects() {
         const opts = [];
@@ -683,7 +698,10 @@
             
             let reqBadge = '';
             if(t.requirements && t.requirements.length > 0) {
-                const reqList = t.requirements.map(r => dict[`req_${r}`] || r).join(', ');
+                const reqList = t.requirements.map(r => {
+                    if(r === 'other') return (dict['req_other'] || 'Sonstige') + (t.requirementOtherText ? ': ' + t.requirementOtherText : '');
+                    return dict[`req_${r}`] || r;
+                }).join(', ');
                 reqBadge = `<br><small class="text-info">🔹 ${reqList}</small>`;
             }
 
@@ -771,6 +789,8 @@
 
             const requirements = [];
             document.querySelectorAll('.req-check:checked').forEach(cb => requirements.push(cb.value));
+            const requirementOtherText = (requirements.includes('other') && document.getElementById('req-other-desc'))
+                ? document.getElementById('req-other-desc').value.trim() : '';
 
             let assignedTo=[], assignedNames=[];
             if(assignType==='specific'){
@@ -791,11 +811,12 @@
                         urls.push(await getDownloadURL(refS));
                     }
                 }
-                await addDoc(collection(db,"tasks"),{ title, description:desc, priority, deadline, requirements, assignedType: assignType, assignedTo, assignedNames, status:'new', createdBy:auth.currentUser.uid, createdAt:new Date().toISOString(), descriptionImages:urls });
+                await addDoc(collection(db,"tasks"),{ title, description:desc, priority, deadline, requirements, requirementOtherText, assignedType: assignType, assignedTo, assignedNames, status:'new', createdBy:auth.currentUser.uid, createdAt:new Date().toISOString(), descriptionImages:urls });
                 alert("Task created successfully!"); 
                 
                 document.getElementById('create-task-form').reset();
                 if(quillCreateEditor) quillCreateEditor.setText('');
+                if(document.getElementById('req-other-container')) document.getElementById('req-other-container').classList.add('d-none');
                 
                 const rGlobal = document.querySelector('input[name="assignType"][value="global"]');
                 if(rGlobal) rGlobal.checked = true;

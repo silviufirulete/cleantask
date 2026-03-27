@@ -20,6 +20,9 @@
                             <div class="form-check"><input class="form-check-input req-check" type="checkbox" value="mittel" id="req-mittel"><label class="form-check-label small" for="req-mittel" data-i18n="req_mittel">Mittel</label></div>
                             <div class="form-check"><input class="form-check-input req-check" type="checkbox" value="other" id="req-sonstige" onchange="toggleDescRequired()"><label class="form-check-label small" for="req-sonstige" data-i18n="req_other">Sonstige</label></div>
                         </div>
+                        <div id="req-other-container" class="mt-2 d-none">
+                            <input type="text" id="req-other-desc" class="form-control form-control-sm" data-i18n-placeholder="req_other_placeholder" placeholder="Describe what is needed...">
+                        </div>
                     </div>
 
                     <!-- EDITOR RICH TEXT AICI -->
